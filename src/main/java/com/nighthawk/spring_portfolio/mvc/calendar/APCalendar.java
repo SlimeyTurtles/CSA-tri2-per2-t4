@@ -36,19 +36,25 @@ public class APCalendar {
         while (yearsFrom2019 != 0) {
             
             if (yearsFrom2019 > 0) {
+                
                 if (isLeapYear(yearsFrom2019 + 2018)) {
                     daysFrom2019 += 366;
                 } else {
                     daysFrom2019 += 365;
                 }
+                
                 yearsFrom2019 -= 1;
+            
             } else if (yearsFrom2019 < 0) {
+
                 if (isLeapYear(yearsFrom2019 + 2020)) {
                     daysFrom2019 -= 366;
                 } else {
                     daysFrom2019 -= 365;
                 }
+            
                 yearsFrom2019 += 1;
+            
             }
         }
 
@@ -69,7 +75,8 @@ public class APCalendar {
      * dayOfYear(3, 1, 2016) returns 61, since 2016 is a leap year. 
     */ 
     private static int dayOfYear(int month, int day, int year) {
-        // implementation not shown
+        
+        daysInMonth = {}
 
         return 1;
         }
@@ -78,9 +85,19 @@ public class APCalendar {
      * Precondition: 0 <= year1 <= year2
     */ 
     public static int numberOfLeapYears(int year1, int year2) {
-         // to be implemented in part (a)
+        
+        int counter = 0;
 
-        return 0;
+        for (int i = year2-year1; i>=0; i--) {
+
+            if (isLeapYear(i+year1)) {
+
+                counter++;
+            
+            }
+        }
+
+        return counter;
         }
 
     /** Returns the value representing the day of the week for the given date
@@ -99,7 +116,7 @@ public class APCalendar {
 
         // Public access modifiers
         System.out.println("isLeapYear: " + APCalendar.isLeapYear(2022));
-        System.out.println("numberOfLeapYears: " + APCalendar.numberOfLeapYears(2000, 2022));
+        System.out.println("numberOfLeapYears: " + APCalendar.numberOfLeapYears(2096, 2104));
         System.out.println("dayOfWeek: " + APCalendar.dayOfWeek(1, 1, 2022));
     }
 
