@@ -76,9 +76,18 @@ public class APCalendar {
     */ 
     private static int dayOfYear(int month, int day, int year) {
         
-        daysInMonth = {}
+        int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        int output = 0;
 
-        return 1;
+        for (int i = month-1; i>0; i--) {
+            output += daysInMonth[i];
+        }
+
+        if (isLeapYear(year) && month>2) {
+            output += 1;
+        }
+
+        return output + day;
         }
 
     /** Returns the number of leap years between year1 and year2, inclusive.
@@ -104,8 +113,18 @@ public class APCalendar {
      * Precondition: The date represented by month, day, year is a valid date.
     */
     public static int dayOfWeek(int month, int day, int year) { 
-        // to be implemented in part (b)
-        return 0;
+        
+        int numLeapYears = numberOfLeapYears(1, year);
+
+        if (isLeapYear(year) && month<=2) {
+            day--;
+        }
+
+        int daysTotal = 365*year + numLeapYears + day + 2;
+
+        int dayOfWeek = daysTotal % 7;
+
+        return dayOfWeek;
         }
 
     /** Tester method */
@@ -116,8 +135,8 @@ public class APCalendar {
 
         // Public access modifiers
         System.out.println("isLeapYear: " + APCalendar.isLeapYear(2022));
-        System.out.println("numberOfLeapYears: " + APCalendar.numberOfLeapYears(2096, 2104));
-        System.out.println("dayOfWeek: " + APCalendar.dayOfWeek(1, 1, 2022));
+        System.out.println("numberOfLeapYears: " + APCalendar.numberOfLeapYears(0,2000));
+        System.out.println("dayOfWeek: " + APCalendar.dayOfWeek(1, 1, 2000));
     }
 
 }
