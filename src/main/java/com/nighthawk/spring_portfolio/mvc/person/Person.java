@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
@@ -48,13 +49,19 @@ public class Person {
 
     // email, password, roles are key attributes to login and authentication
     @NotEmpty
-    @Size(min=5)
+    @Size(min=7)
     @Column(unique=true)
     @Email
     private String email;
 
     @NotEmpty
     private String password;
+
+    @NotNull
+    private int height;
+
+    @NotNull
+    private int weight;
 
     // @NonNull, etc placed in params of constructor: "@NonNull @Size(min = 2, max = 30, message = "Name (2 to 30 chars)") String name"
     @NonNull
@@ -79,11 +86,13 @@ public class Person {
     
 
     // Constructor used when building object from an API
-    public Person(String email, String password, String name, Date dob) {
+    public Person(String email, String password, String name, Date dob, int height, int weight) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.dob = dob;
+        this.height = height;
+        this.weight = weight;
     }
 
     // A custom getter to return age from dob attribute
@@ -94,4 +103,15 @@ public class Person {
         return -1;
     }
 
+    // Tester method
+    public static void main(String args[]) {
+        Person person = new Person("avinhahuynh@gmail.com", "password123", "avinh", new Date(100,100,100), 70, 115);
+        System.out.println("email: " + person.getEmail());
+        System.out.println("password: " + person.getPassword());
+        System.out.println("name: " + person.getName());
+        System.out.println("dob: " + person.getDob());
+        System.out.println("age: " + person.getAge());
+        System.out.println("height: " + person.getHeight());
+        System.out.println("weight: " + person.getWeight());
+    }
 }
