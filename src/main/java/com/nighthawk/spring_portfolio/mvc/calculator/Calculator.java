@@ -1,4 +1,4 @@
-
+package com.nighthawk.spring_portfolio.mvc.calculator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +13,7 @@ import java.util.Stack;
     to handle computer math we often convert strings into reverse polish notation
     to handle errors we perform try / catch or set default conditions to trap errors
      */
-public class Main {
+public class Calculator {
     // Key instance variables
     private final String expression;
     private ArrayList<String> tokens;
@@ -42,18 +42,25 @@ public class Main {
     }
 
     // Create a 1 argument constructor expecting a mathematical expression
-    public Main(String expression) {
+    public Calculator(String expression) {
         // original input
         this.expression = expression;
+        
+        if (this.parenthesisChecker()) {
 
-        // parse expression into terms
-        this.termTokenizer();
+            // parse expression into terms
+            this.termTokenizer();
 
-        // place terms into reverse polish notation
-        this.tokensToReversePolishNotation();
+            // place terms into reverse polish notation
+            this.tokensToReversePolishNotation();
 
-        // calculate reverse polish notation
-        this.rpnToResult();
+            // calculate reverse polish notation
+            this.rpnToResult();
+
+        } else {
+            this.parenthesisCheckerToString();
+            this.result = null;
+        }
     }
 
     // Test if token is an operator
@@ -213,14 +220,15 @@ public class Main {
         this.result = calcStack.pop();
     }
 	
-	public boolean parenthesisChecker(String string) {
+	private boolean parenthesisChecker() {
     	
+        String string = this.expression;
         int count = 0;
         
     	for (int i = 0; i < string.length(); i++) {
-            if (string.charAt(i).equals("(")) {
+            if (string.substring(i, i+1).equals("(")) {
             	count++;
-            } else if (string.charAt(i).equals(")")) {
+            } else if (string.substring(i, i+1).equals(")")) {
             	count--;
             }
         }
@@ -228,59 +236,68 @@ public class Main {
         if (count == 0) {
 			return true;
         } else {
-        	return false
+        	return false;
         }
     	
     }
     
-    public void parenthesisCheckerToString(String string) {
+    private String parenthesisCheckerToString() {
     
-    	if (parenthesisChecker(string)) {
-        	System.out.println("Parenthesis good");
+    	if (this.parenthesisChecker()) {
+        	return "parenthesis is good";
         } else {
-        	System.out.println("Parenthesis bad");	
+        	return "parenthesis is bad";
         }
     
     }
     
     // Print the expression, terms, and result
     public String toString() {
-        return ("Original expression: " + this.expression + "\n" +
+        if (this.parenthesisChecker()){
+            return ("Original expression: " + this.expression + "\n" +
                 "Tokenized expression: " + this.tokens.toString() + "\n" +
                 "Reverse Polish Notation: " +this.reverse_polish.toString() + "\n" +
-                "Final result: " + String.format("%.2f", this.result));
+                "Final result: " + String.format("%.2f", this.result));    
+        } else {
+            return this.parenthesisCheckerToString();
+        }
+        
     }
 
     // Tester method
     public static void main(String[] args) {
         // Random set of test cases
-        Main simpleMath = new Main("100 + 200  * 3");
+        Calculator simpleMath = new Calculator("100 + 200  * 3");
         System.out.println("Simple Math\n" + simpleMath);
 
         System.out.println();
 
-        Main parenthesisMath = new Main("(100 + 200)  * 3");
+        Calculator parenthesisMath = new Calculator("(100 + 200)  * 3");
         System.out.println("Parenthesis Math\n" + parenthesisMath);
 
         System.out.println();
 
-        Main decimalMath = new Main("100.2 - 99.3");
+        Calculator decimalMath = new Calculator("100.2 - 99.3");
         System.out.println("Decimal Math\n" + decimalMath);
 
         System.out.println();
 
-        Main moduloMath = new Main("300 % 200");
+        Calculator moduloMath = new Calculator("300 % 200");
         System.out.println("Modulo Math\n" + moduloMath);
 
         System.out.println();
 
-        Main divisionMath = new Main("300/200");
+        Calculator divisionMath = new Calculator("300/200");
         System.out.println("Division Math\n" + divisionMath);
         
-        Main exponentMath = new Main("2^3");
+        System.out.println();
+
+        Calculator exponentMath = new Calculator("2^3");
         System.out.println("Exponent Math\n" + exponentMath);
         
-        Main parenthesisChecker = new Main("2^3");
+        System.out.println();
+
+        Calculator parenthesisChecker = new Calculator("(2^3");
         System.out.println("Parenthesis Checker\n" + parenthesisChecker);
 
     }

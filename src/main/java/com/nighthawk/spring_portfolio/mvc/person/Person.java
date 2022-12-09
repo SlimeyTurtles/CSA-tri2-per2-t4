@@ -103,9 +103,11 @@ public class Person {
         return -1;
     }
 
+    // make toString
+
     // Tester method
     public static void main(String args[]) {
-        Person person = new Person("avinhahuynh@gmail.com", "password123", "avinh", new Date(100,100,100), 70, 115);
+        Person person = new Person("avinhahuynh@gmail.com", "password123", "avinh", new Date(2004,12,27), 70, 115);
         System.out.println("email: " + person.getEmail());
         System.out.println("password: " + person.getPassword());
         System.out.println("name: " + person.getName());
