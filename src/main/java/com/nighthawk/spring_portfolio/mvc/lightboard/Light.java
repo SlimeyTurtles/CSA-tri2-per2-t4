@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lombok.Data;
+import net.bytebuddy.agent.builder.AgentBuilder.RedefinitionListenable;
 
 @Data  // Annotations to simplify writing code (ie constructors, setters)
 public class Light {
@@ -49,6 +50,13 @@ public class Light {
         this.green = (short) (Math.random()*(maxColor+1));
         this.blue = (short) (Math.random()*(maxColor+1));
         this.effect = (short) (Math.random()*(effect+1));
+    }
+
+    public Light(short red, short green, short blue) {
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+        this.effect = 0;
     }
 
     public String getEffectTitle() {
