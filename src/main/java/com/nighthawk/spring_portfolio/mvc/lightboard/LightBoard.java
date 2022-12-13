@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data  // Annotations to simplify writing code (ie constructors, setters)
 public class LightBoard {
-    private Light[][] lights;
+    protected Light[][] lights;
 
     /* Initialize LightBoard and Lights */
     public LightBoard(int numRows, int numCols) {
@@ -124,7 +124,7 @@ public class LightBoard {
 		return outString;
     }
     
-    public void toFile() {
+    public void toFile(String path) {
 
         BufferedImage img = null;
         img = new BufferedImage(lights[0].length, lights.length, BufferedImage.TYPE_INT_ARGB);
@@ -136,11 +136,15 @@ public class LightBoard {
         }
 
         try {
-            File f = new File("src/main/resources/static/images/lightboardImgs/img.png");
+            File f = new File(path);
             ImageIO.write(img, "png", f);
         } catch (IOException e) {
             System.out.println("Error: " + e);
         }
+    }
+
+    public Light[][] getLights() {
+        return this.lights;
     }
 
     static public void main(String[] args) {
