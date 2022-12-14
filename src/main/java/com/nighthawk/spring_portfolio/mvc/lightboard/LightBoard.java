@@ -155,6 +155,6 @@ public class LightBoard {
         System.out.println(lightBoard.toColorPalette());
 
         LightBoard fileBoard = new LightBoard(100, 100);
-        fileBoard.toFile();
+        fileBoard.toFile("src/main/resources/static/images/lightboardImgs/img.png");
     }
 }

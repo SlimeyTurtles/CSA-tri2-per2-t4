@@ -10,8 +10,8 @@ public class PixelBoysFighting extends LightBoard {
 
     public PixelBoysFighting(int row, int col) {
         super(row, col);
-        this.rowMax = lights.length-1;
-        this.colMax = lights[0].length-1;
+        this.rowMax = lights.length;
+        this.colMax = lights[0].length;
         roundLightBoard();
     }
 
@@ -33,10 +33,10 @@ public class PixelBoysFighting extends LightBoard {
     }
 
     private static Light createLight(String color) {
-        if (color.equals("red")) {
-            return new Light((short) 255, (short) 0, (short) 0);
-        } else if (color.equals("green")) {
+        if (color.equals("green")) {
             return new Light((short) 0, (short) 255, (short) 0);
+        } else if (color.equals("red")) {
+            return new Light((short) 255, (short) 0, (short) 0);
         } else {
             return new Light((short) 0, (short) 0, (short) 255);
         }
@@ -44,52 +44,67 @@ public class PixelBoysFighting extends LightBoard {
     
     private static String findMax(short red, short green, short blue) {
 
-        if (red > blue) {
-            if (red > green) {
-                return "red";
-            } else if (green > red) {
-                return "green";
-            } else {
-                if (Math.random() < 0.5) {
+        if (red > blue && red > green) {    
+            return "red";
+        } else if (green > red && green > blue) {
+            return "green";
+        } else if (blue > green && blue > red) {
+            return "blue";
+        } else {
+            double rand = Math.random() * 3;
+
+            // all the values are the same
+            if (red == blue && red == green) {
+                if (rand <= 1) {
+                    return "red";
+                } else if (rand > 2) {
+                    return "green";
+                } else {
+                    return "blue";
+                }
+            }
+
+            // red and blue are the maxes
+            if (red == blue) {
+                if (rand < 1.5) {
+                    return "red";
+                } else {
+                    return "blue";
+                }
+            }
+
+            // red and green are the maxes
+            if (red == green) {
+                if (rand < 1.5) {
                     return "red";
                 } else {
                     return "green";
                 }
             }
-        } else if (blue > red) {
-            if (blue > green) {
-                return "blue";
-            } if (green > blue) {
-                return "green";
-            } else {
-                if (Math.random() < 0.5) {
-                    return "blue";
-                } else {
+
+            // green and blue are the maxes
+            if (blue == green) {
+                if (rand < 1.5) {
                     return "green";
+                } else {
+                    return "blue";
                 }
             }
-        } else {
-            if (Math.random() < 0.5) {
-                return "red";
-            } else {
-                return "blue";
-            }
+
+            return "error";
         }
     }
 
     private List<Light> lightListAdd( int row, int col) {
         List<Light> lightList = new ArrayList<Light>();
 
-        System.out.println("col" + col);
-        System.out.println("max" + colMax);
-
-        if (row != 0) {
+        if (row > 0) {
             lightList.add(lights[row-1][col]);    
-        } if (row != rowMax) {
-                lightList.add(lights[row+1][col]);
-        } if (col != 0) {
+        } if (row < rowMax - 1) {
+            lightList.add(lights[row+1][col]);
+        } if (col > 0) {
             lightList.add(lights[row][col-1]);
-        } if (col != colMax) {
+        } if (col < colMax - 1) {
             lightList.add(lights[row][col+1]);
         }
         lightList.add(lights[row][col]);
@@ -101,11 +116,8 @@ public class PixelBoysFighting extends LightBoard {
         
         Light[][] newLightBoard = new Light[rowMax][colMax];
 
-        for (int row = 0; row <= rowMax; row++) {
-            for (int col = 0; col <= colMax; col++) {
-
-                System.out.println("row: " + row);
-                System.out.println("col: " + col);
+        for (int row = 0; row < rowMax; row++) {
+            for (int col = 0; col < colMax; col++) {
 
                 short r = 0;
                 short g = 0;
@@ -114,7 +126,7 @@ public class PixelBoysFighting extends LightBoard {
                 List<Light> lightList = lightListAdd(row, col);
 
                 for (Light light : lightList) {
-                    
+
                     String color = findMax(light.getRed(), light.getGreen(), light.getBlue());
 
                     if (color.equals("red")) {
@@ -138,15 +150,14 @@ public class PixelBoysFighting extends LightBoard {
     }
 
     public static void main(String[] args) {
-        PixelBoysFighting obj = new PixelBoysFighting(10, 10);
-        obj.toFile("src/main/resources/static/images/lightboardImgs/iteration1.png");
-        obj.iterate();
-        obj.toFile("src/main/resources/static/images/lightboardImgs/iteration2.png");
-        obj.iterate();
-        obj.toFile("src/main/resources/static/images/lightboardImgs/iteration3.png");
-        obj.iterate();
-        obj.toFile("src/main/resources/static/images/lightboardImgs/iteration4.png");
-        obj.iterate();
-        obj.toFile("src/main/resources/static/images/lightboardImgs/iteration5.png");
+
+        PixelBoysFighting obj = new PixelBoysFighting(50, 50);
+
+        obj.toFile("src/main/resources/static/images/lightboardImgs/iteration0.png");
+
+        for (int i = 1; i < 10; i++) {
+            obj.iterate();
+            obj.toFile("src/main/resources/static/images/lightboardImgs/iteration" + i + ".png");
+        }
     }
 }
