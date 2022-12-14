@@ -106,47 +106,84 @@ public class PixelBoysFighting extends LightBoard {
             lightList.add(lights[row][col-1]);
         } if (col < colMax - 1) {
             lightList.add(lights[row][col+1]);
+        } if (row > 0 && col > 0) {
+            lightList.add(lights[row-1][col-1]);
+        } if (row < rowMax - 1 && col < colMax - 1) {
+            lightList.add(lights[row+1][col+1]);
+        } if (row > 0 && col < colMax - 1) {
+            lightList.add(lights[row-1][col+1]);
+        } if (row < rowMax - 1 && col > 0) {
+            lightList.add(lights[row+1][col-1]);
         }
         lightList.add(lights[row][col]);
 
         return lightList;
     }
 
-    private void iterate() {
+    // private String gameOfLife(String color, short red, short green, short blue) {
+    //     if (color.equals("red") && red == 2 || color.equals("red") && red == 3) {
+    //         return "red";
+    //     } else if (color.equals("green") && green == 2 || color.equals("green") && green == 3) {
+    //         return "green";
+    //     } else if (color.equals("blue") && blue == 2 || color.equals("blue") && blue == 3) {
+    //         return "blue";
+    //     } else {
+    //         String newCol = findMax(red, green, blue);
+
+    //         if (newCol.equals("red") && newCol.equals(color)) {
+    //             double rand = Math.random();
+
+    //             if (rand > 0.5) {
+    //                 return 
+    //             }
+    //         } else if (newCol.equals("green") && newCol.equals(color)) {
+
+    //         } else if (newCol.equals("blue") && newCol.equals(color)) {
+
+    //         }
+    //     }
+    // }
+
+    private void iterate(int x) {
         
-        Light[][] newLightBoard = new Light[rowMax][colMax];
+        if (x > 0) {
+            Light[][] newLightBoard = new Light[rowMax][colMax];
 
-        for (int row = 0; row < rowMax; row++) {
-            for (int col = 0; col < colMax; col++) {
-
-                short r = 0;
-                short g = 0;
-                short b = 0;
-
-                List<Light> lightList = lightListAdd(row, col);
-
-                for (Light light : lightList) {
-
-                    String color = findMax(light.getRed(), light.getGreen(), light.getBlue());
-
-                    if (color.equals("red")) {
-                        r++;
-                    } else if (color.equals("green")) {
-                        g++;
-                    } else if (color.equals("blue")) {
-                        b++;
-                    } else {
-                        System.out.println("how did this happen");
+            for (int row = 0; row < rowMax; row++) {
+                for (int col = 0; col < colMax; col++) {
+    
+                    short r = 0;
+                    short g = 0;
+                    short b = 0;
+    
+                    List<Light> lightList = lightListAdd(row, col);
+    
+                    for (Light light : lightList) {
+    
+                        String color = findMax(light.getRed(), light.getGreen(), light.getBlue());
+    
+                        if (color.equals("red")) {
+                            r++;
+                        } else if (color.equals("green")) {
+                            g++;
+                        } else if (color.equals("blue")) {
+                            b++;
+                        } else {
+                            System.out.println("how did this happen");
+                        }
                     }
+    
+                    String newColor = findMax(r, g, b);
+    
+                    newLightBoard[row][col] = createLight(newColor);
                 }
-
-                String newColor = findMax(r, g, b);
-
-                newLightBoard[row][col] = createLight(newColor);
             }
+    
+            this.lights = newLightBoard;
+            x--;
+            this.toFile("src/main/resources/static/images/lightboardImgs/iteration" + x + ".png");
+            iterate(x);
         }
-
-        this.lights = newLightBoard;
     }
 
     public static void main(String[] args) {
@@ -155,9 +192,6 @@ public class PixelBoysFighting extends LightBoard {
 
         obj.toFile("src/main/resources/static/images/lightboardImgs/iteration0.png");
 
-        for (int i = 1; i < 10; i++) {
-            obj.iterate();
-            obj.toFile("src/main/resources/static/images/lightboardImgs/iteration" + i + ".png");
-        }
+        obj.iterate(30);
     }
 }
