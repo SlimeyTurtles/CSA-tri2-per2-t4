@@ -2,7 +2,6 @@ package com.nighthawk.spring_portfolio.mvc.lightboard;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -11,6 +10,7 @@ import lombok.Data;
 
 @Data  // Annotations to simplify writing code (ie constructors, setters)
 public class LightBoard {
+    
     protected Light[][] lights;
 
     /* Initialize LightBoard and Lights */

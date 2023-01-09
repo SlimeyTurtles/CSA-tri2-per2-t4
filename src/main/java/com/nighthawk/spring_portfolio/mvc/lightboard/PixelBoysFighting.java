@@ -6,6 +6,7 @@ import java.util.List;
 public class PixelBoysFighting extends LightBoard {
     
     private int rowMax;
+    
     private int colMax;
 
     public PixelBoysFighting(int row, int col) {
@@ -144,7 +145,7 @@ public class PixelBoysFighting extends LightBoard {
     //     }
     // }
 
-    private void iterate(int x) {
+    public void iterate(int x) {
         
         if (x > 0) {
             Light[][] newLightBoard = new Light[rowMax][colMax];
@@ -171,6 +172,7 @@ public class PixelBoysFighting extends LightBoard {
                         } else {
                             System.out.println("how did this happen");
                         }
+                    
                     }
     
                     String newColor = findMax(r, g, b);
@@ -188,10 +190,12 @@ public class PixelBoysFighting extends LightBoard {
 
     public static void main(String[] args) {
 
-        PixelBoysFighting obj = new PixelBoysFighting(50, 50);
+        PixelBoysFighting obj = new PixelBoysFighting(3, 3);
 
-        obj.toFile("src/main/resources/static/images/lightboardImgs/iteration0.png");
+        System.out.println(obj.toString());
 
-        obj.iterate(30);
+        // obj.toFile("src/main/resources/static/images/lightboardImgs/iteration0.png");
+
+        // obj.iterate(30);
     }
 }
