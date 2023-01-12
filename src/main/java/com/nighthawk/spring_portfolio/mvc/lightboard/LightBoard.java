@@ -5,12 +5,21 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.persistence.Column;
+
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
+import com.vladmihalcea.hibernate.type.json.JsonType;
 
 import lombok.Data;
 
 @Data  // Annotations to simplify writing code (ie constructors, setters)
+@TypeDef(name="json", typeClass = JsonType.class)
 public class LightBoard {
     
+    @Type(type="json")
+    @Column(columnDefinition = "jsonb")
     protected Light[][] lights;
 
     /* Initialize LightBoard and Lights */

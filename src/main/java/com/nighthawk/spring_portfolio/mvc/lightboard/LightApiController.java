@@ -10,9 +10,8 @@ public class LightApiController {
 
     // Get random lightboard
     @GetMapping("/")
-    public ResponseEntity<String> createArray() {
-        PixelBoys
-        return new ResponseEntity<>( new PixelBoysFighting(5, 5).toString(), HttpStatus.OK);
+    public ResponseEntity<LightBoard> createArray() {
+        return new ResponseEntity<>( new LightBoard(5, 5), HttpStatus.OK);
     }
 
     // Iterate over lightboard
