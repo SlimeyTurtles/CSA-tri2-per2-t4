@@ -77,16 +77,16 @@ public class CalendarApiController {
       return ResponseEntity.ok(json3);  // JSON response, see ExceptionHandlerAdvice for throws
     }
 
-    @GetMapping("/numberOfLeapYears/{year1}/{year2}")
-    public ResponseEntity<JsonNode> getNumberOfLeapYears(@PathVariable int month, @PathVariable int day, @PathVariable int year) throws JsonMappingException, JsonProcessingException {
-      // Backend Year Object
-      Year year_obj4 = new Years(year1, year2);
-      year_obj4.setYear(year);  // evaluates Leap Year
+//     @GetMapping("/numberOfLeapYears/{year1}/{year2}")
+//     public ResponseEntity<JsonNode> getNumberOfLeapYears(@PathVariable int month, @PathVariable int day, @PathVariable int year) throws JsonMappingException, JsonProcessingException {
+//       // Backend Year Object
+//       Year year_obj4 = new Years(year1, year2);
+//       year_obj4.setYear(year);  // evaluates Leap Year
 
-      // Turn Year Object into JSON
-      ObjectMapper mapper4 = new ObjectMapper(); 
-      JsonNode json4 = mapper4.readTree(year_obj4.numberOfLeapYearsToString()); // this requires exception handling
+//       // Turn Year Object into JSON
+//       ObjectMapper mapper4 = new ObjectMapper(); 
+//       JsonNode json4 = mapper4.readTree(year_obj4.numberOfLeapYearsToString()); // this requires exception handling
 
-      return ResponseEntity.ok(json4);  // JSON response, see ExceptionHandlerAdvice for throws
-    }
+//       return ResponseEntity.ok(json4);  // JSON response, see ExceptionHandlerAdvice for throws
+//     }
 }
