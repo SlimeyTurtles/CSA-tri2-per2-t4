@@ -5,9 +5,9 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.persistence.Column;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import com.vladmihalcea.hibernate.type.json.JsonType;
@@ -18,8 +18,7 @@ import lombok.Data;
 @TypeDef(name="json", typeClass = JsonType.class)
 public class LightBoard {
     
-    @Type(type="json")
-    @Column(columnDefinition = "jsonb")
+    @NotNull
     protected Light[][] lights;
 
     /* Initialize LightBoard and Lights */
